@@ -26,7 +26,7 @@ class Mom:
             value = 0
             for cliente in self.consumidoresConectados:
                 idCliente = cliente
-                if (self.consumidoresConectados.[idCliente][5] == True):
+                if (self.consumidoresConectados[idCliente][5] == True):
                     try:
                         idCliente = cliente
                         arreglo = self.consumidoresConectados[idCliente]

@@ -25,23 +25,26 @@ class Mom:
         if (len(self.consumidoresConectados) != 0):
             value = 0
             for cliente in self.consumidoresConectados:
-                idCliente = cliente
-                arreglo = self.consumidoresConectados[idCliente]
-                conexionAplicacion = arreglo[0]
-                direccionAplicacion = arreglo[1]
-                self.consumidoresConectados[idCliente][4] = self.canales[
-                    int(self.consumidoresConectados[idCliente][3])].getCola()
-                auxIndex = 0
-                while auxIndex < len(self.consumidoresConectados[idCliente][4]):
-                    respuesta = ""
-                    mensajeEnviar = self.consumidoresConectados[idCliente][4][auxIndex]
-                    respuesta = f"Repsuesta para: {direccionAplicacion} Tiene un nuevo mensaje: {mensajeEnviar}\n"
-                    conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
-                    print(mensajeEnviar)
-                    auxIndex = auxIndex + 1
-                if (value == len(self.consumidoresConectados) - 1):
-                    self.canales[int(self.consumidoresConectados[idCliente][3])].vaciarCola()
-                value = value + 1
+                try:
+                    idCliente = cliente
+                    arreglo = self.consumidoresConectados[idCliente]
+                    conexionAplicacion = arreglo[0]
+                    direccionAplicacion = arreglo[1]
+                    self.consumidoresConectados[idCliente][4] = self.canales[
+                        int(self.consumidoresConectados[idCliente][3])].getCola()
+                    auxIndex = 0
+                    while auxIndex < len(self.consumidoresConectados[idCliente][4]):
+                        respuesta = ""
+                        mensajeEnviar = self.consumidoresConectados[idCliente][4][auxIndex]
+                        respuesta = f"Repsuesta para: {direccionAplicacion} Tiene un nuevo mensaje: {mensajeEnviar}\n"
+                        conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
+                        print(mensajeEnviar)
+                        auxIndex = auxIndex + 1
+                    if (value == len(self.consumidoresConectados) - 1):
+                        self.canales[int(self.consumidoresConectados[idCliente][3])].vaciarCola()
+                    value = value + 1
+                except:
+                    self.consumidoresConectados.pop(int(idCliente))
 
     def threaded(self, conexionAplicacion, direccionAplicacion):
         while True:
@@ -188,17 +191,21 @@ class Mom:
                 nombreCola = arreglo[1]
                 idCola = arreglo[2]
                 respuesta = ""
-                nombreAux = self.colas[int(idCola)].getNombre()
-                idAux = self.colas[int(idCola)].getId()
-                if (str(idCola) == str(idAux) and str(nombreCola) == str(nombreAux)):
-                    if (self.colas[int(idCola)].getTamañoCola() == 0):
-                        respuesta = f'Respuesta para: {direccionAplicacion[0]} No hay mensajes\n'
-                        conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
+                try:
+                    nombreAux = self.colas[int(idCola)].getNombre()
+                    idAux = self.colas[int(idCola)].getId()
+                    if (str(idCola) == str(idAux) and str(nombreCola) == str(nombreAux)):
+                        if (self.colas[int(idCola)].getTamañoCola() == 0):
+                            respuesta = f'Respuesta para: {direccionAplicacion[0]} No hay mensajes\n'
+                            conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
+                        else:
+                            mensajeEnviar = self.colas[int(idCola)].cambiarIndiceEnvio()
+                            respuesta = f"Repsuesta para: {direccionAplicacion} Tiene un nuevo mensaje: {mensajeEnviar}\n"
+                            conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
                     else:
-                        mensajeEnviar = self.colas[int(idCola)].cambiarIndiceEnvio()
-                        respuesta = f"Repsuesta para: {direccionAplicacion} Tiene un nuevo mensaje: {mensajeEnviar}\n"
+                        respuesta = f'Respuesta para: {direccionAplicacion[0]} Error al hacer Pull de la cola, los datos de acceso son erroneos\n'
                         conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
-                else:
+                except:
                     respuesta = f'Respuesta para: {direccionAplicacion[0]} Error al hacer Pull de la cola, los datos de acceso son erroneos\n'
                     conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
 

@@ -104,7 +104,7 @@ class Mom:
                 else:
                     for canal in self.canales:
                         idCanal = canal
-                        respuesta = respuesta + f'Canal, Token  de identificacion: {self.canales[idCanal].getId()}: {self.canales[idCanal].getNombre()} estado: {self.canale[idCanal].getEstado()}\n'
+                        respuesta = respuesta + f'Canal, Token  de identificacion: {self.canales[idCanal].getId()}: {self.canales[idCanal].getNombre()} estado: {self.canales[idCanal].getEstado()}\n'
 
                 conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
                 print(f'Se envio respuesta a: {direccionAplicacion[0]} por la solicitud: {opcion}')

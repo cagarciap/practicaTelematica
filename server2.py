@@ -25,26 +25,28 @@ class Mom:
         if (len(self.consumidoresConectados) != 0):
             value = 0
             for cliente in self.consumidoresConectados:
-                try:
-                    idCliente = cliente
-                    arreglo = self.consumidoresConectados[idCliente]
-                    conexionAplicacion = arreglo[0]
-                    direccionAplicacion = arreglo[1]
-                    self.consumidoresConectados[idCliente][4] = self.canales[
-                        int(self.consumidoresConectados[idCliente][3])].getCola()
-                    auxIndex = 0
-                    while auxIndex < len(self.consumidoresConectados[idCliente][4]):
-                        respuesta = ""
-                        mensajeEnviar = self.consumidoresConectados[idCliente][4][auxIndex]
-                        respuesta = f"Repsuesta para: {direccionAplicacion} Tiene un nuevo mensaje: {mensajeEnviar}\n"
-                        conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
-                        print(mensajeEnviar)
-                        auxIndex = auxIndex + 1
-                    if (value == len(self.consumidoresConectados) - 1):
-                        self.canales[int(self.consumidoresConectados[idCliente][3])].vaciarCola()
-                    value = value + 1
-                except:
-                    self.consumidoresConectados.pop(int(idCliente))
+                idCliente = cliente
+                if (self.consumidoresConectados.[idCliente][5] == True):
+                    try:
+                        idCliente = cliente
+                        arreglo = self.consumidoresConectados[idCliente]
+                        conexionAplicacion = arreglo[0]
+                        direccionAplicacion = arreglo[1]
+                        self.consumidoresConectados[idCliente][4] = self.canales[
+                            int(self.consumidoresConectados[idCliente][3])].getCola()
+                        auxIndex = 0
+                        while auxIndex < len(self.consumidoresConectados[idCliente][4]):
+                            respuesta = ""
+                            mensajeEnviar = self.consumidoresConectados[idCliente][4][auxIndex]
+                            respuesta = f"Repsuesta para: {direccionAplicacion} Tiene un nuevo mensaje: {mensajeEnviar}\n"
+                            conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
+                            print(mensajeEnviar)
+                            auxIndex = auxIndex + 1
+                        if (value == len(self.consumidoresConectados) - 1):
+                            self.canales[int(self.consumidoresConectados[idCliente][3])].vaciarCola()
+                        value = value + 1
+                    except:
+                        self.consumidoresConectados.[idCliente][5] = False
 
     def threaded(self, conexionAplicacion, direccionAplicacion):
         while True:
@@ -181,6 +183,8 @@ class Mom:
                             claveAcceso)):
                         respuesta = f'Respuesta para: {direccionAplicacion[0]} La conexión se establecio correctamente, ahora puedes enviar mensajes\n'
                         self.canales[int(idCanal)].conectar()
+                    else:
+                        respuesta = f'Respuesta para: {direccionAplicacion[0]} La conexión no se pudo establecer, intenta nuevamente\n'
                 except:
                     respuesta = f'Respuesta para: {direccionAplicacion[0]} Los datos son incorrectos, prueba nuevamente\n'
                 print(f'Se envio respuesta a: {direccionAplicacion[0]} por la solicitud: {opcion}')
@@ -320,7 +324,7 @@ class Mom:
                     if (str(idCanal) == str(idAux) and str(nombreCanal) == str(nombreAux)):
                         respuesta = f'Respuesta para: {direccionAplicacion[0]} La conexión se establecio correctamente, ahora puedes recibir mensajes\n'
                         conexionAplicacion.sendall(respuesta.encode(constants.ENCODING_FORMAT))
-                        arregloConsumidor = [conexionAplicacion, direccionAplicacion, nombreAux, idCanal, deque()]
+                        arregloConsumidor = [conexionAplicacion, direccionAplicacion, nombreAux, idCanal, deque(),True]
                         self.canales[int(idCanal)].agregarCliente(self.contadorConsumidores)
                         self.consumidoresConectados[self.contadorConsumidores] = arregloConsumidor
                         self.contadorConsumidores = self.contadorConsumidores + 1

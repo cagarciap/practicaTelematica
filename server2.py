@@ -46,7 +46,7 @@ class Mom:
                             self.canales[int(self.consumidoresConectados[idCliente][3])].vaciarCola()
                         value = value + 1
                     except:
-                        self.consumidoresConectados.[idCliente][5] = False
+                        self.consumidoresConectados[idCliente][5] = False
 
     def threaded(self, conexionAplicacion, direccionAplicacion):
         while True:

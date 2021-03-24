@@ -24,11 +24,7 @@ class Mom:
         self.genera_clave()
         self.clave = self.cargar_clave()
         
-    def getClaveAcceso(self,clave):
-		desencriptado = self.f.decrypt(clave)
-        return str(desencriptado.decode())
-
-	def genera_clave(self):
+    def genera_clave(self):
 	    clave = Fernet.generate_key()
 	    with open("clave.key","wb") as archivo_clave:
 	        archivo_clave.write(clave)

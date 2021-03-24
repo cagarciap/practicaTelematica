@@ -26,7 +26,7 @@ class Mom:
         
     def getClaveAcceso(self,clave):
 		desencriptado = self.f.decrypt(clave)
-		return str(desencriptado.decode())
+        return str(desencriptado.decode())
 
 	def genera_clave(self):
 	    clave = Fernet.generate_key()

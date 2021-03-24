@@ -7,7 +7,6 @@ import sys
 from collections import deque
 import os
 import os.path as path
-from cryptography.fernet import Fernet
 
 
 class Mom:
@@ -21,18 +20,7 @@ class Mom:
         self.contadorCanales = 0
         self.consumidoresConectados = {}
         self.contadorConsumidores = 0
-        self.genera_clave()
-        self.clave = self.cargar_clave()
-        
-        
-    def cargar_clave(self):
-	    return open("clave.key","rb").read()
-        
-    def genera_clave(self):
-	    clave = Fernet.generate_key()
-	    with open("clave.key","wb") as archivo_clave:
-	        archivo_clave.write(clave)
-            
+
     def envioMensaje(self):
         if (len(self.consumidoresConectados) != 0):
             value = 0
@@ -352,9 +340,6 @@ class Mom:
                 print(f'{direccionAplicacion[0]} solicita: {opcion}')
                 usuario = arreglo[1]
                 contrasena = arreglo[2]
-                claveEncriptada = contrasena.encode(constants.ENCODING_FORMAT)
-                self.f = Fernet(self.clave)
-                contrasena = self.f.encrypt(claveEncriptada)
                 if (path.exists("usuarios.txt")):
                     file = open("usuarios.txt", "r")
                     lineas = file.readlines()

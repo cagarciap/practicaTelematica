@@ -165,6 +165,8 @@ class Mom:
                             claveAcceso)):
                         respuesta = f'Respuesta para: {direccionAplicacion[0]} La conexión se establecio correctamente, ahora puedes enviar mensajes\n'
                         self.colas[int(idCola)].conectar()
+                    else:
+                        respuesta = f'Respuesta para: {direccionAplicacion[0]} La conexión no se pudo establecer, intenta nuevamente\n'
                 except:
                     respuesta = f'Respuesta para: {direccionAplicacion[0]} Los datos son incorrectos, prueba nuevamente\n'
                 print(f'Se envio respuesta a: {direccionAplicacion[0]} por la solicitud: {opcion}')
@@ -241,6 +243,8 @@ class Mom:
                     if (str(idCola) == str(idAux) and str(nombreCola) == str(nombreAux)):
                         respuesta = f'Respuesta para: {direccionAplicacion[0]} la conexión con el MOM para el envio de mensajes se cerró correctamente\n'
                         self.colas[int(idCola)].desconectar()
+                    else:
+                        respuesta = f'Respuesta para: {direccionAplicacion[0]} se desconecto correctamente\n'
                 except:
                     respuesta = f'Respuesta para: {direccionAplicacion[0]} Ocurrio un error, prueba nuevamente\n'
                 print(f'Se envio respuesta a: {direccionAplicacion[0]} por la solicitud: {opcion}')
@@ -256,6 +260,8 @@ class Mom:
                     if (str(idCanal) == str(idAux) and str(nombreCanal) == str(nombreAux)):
                         respuesta = f'Respuesta para: {direccionAplicacion[0]} la conexión con el MOM para el envio de mensajes se cerró correctamente\n'
                         self.canales[int(idCanal)].desconectar()
+                    else:
+                        respuesta = f'Respuesta para: {direccionAplicacion[0]} se desconecto correctamente\n'
                 except:
                     respuesta = f'Respuesta para: {direccionAplicacion[0]} Ocurrio un error, prueba nuevamente\n'
                 print(f'Se envio respuesta a: {direccionAplicacion[0]} por la solicitud: {opcion}')

@@ -7,6 +7,7 @@ import sys
 from collections import deque
 import os
 import os.path as path
+from cryptography.fernet import Fernet
 
 
 class Mom:

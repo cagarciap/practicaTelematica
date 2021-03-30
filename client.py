@@ -7,7 +7,7 @@ socketProductor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 def main():
     print('*' * 50)
     print("Estás conectando una nueva aplicación productora al MOM\n")
-    socketProductor.connect(("18.214.102.119", constants.PORT))
+    socketProductor.connect(("52.200.207.120", constants.PORT))
     tuplaConexion = socketProductor.getsockname()
     print("Tu dirección de conexión es: ", tuplaConexion)
 

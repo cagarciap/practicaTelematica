@@ -7,7 +7,7 @@ socketConsumidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 def main():
     print('*' * 50)
     print("Estás conectando una nueva aplicación consumidora al MOM\n")
-    socketConsumidor.connect(("18.214.102.119", constants.PORT))
+    socketConsumidor.connect(("52.200.207.120", constants.PORT))
     tuplaConexion = socketConsumidor.getsockname()
     print("Tu dirección de conexión es: ", tuplaConexion)
     opcion = menu()
